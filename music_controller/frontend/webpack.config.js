@@ -7,6 +7,12 @@ module.exports = {
     path: path.resolve(__dirname, './static/frontend'),
     filename: '[name].js',
   },
+  stats: {
+    colors: true,
+    modules: true,
+    reasons: true,
+    errorDetails: true,
+  },
   module: {
     rules: [
       {
@@ -25,7 +31,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         // This has effect on the react lib size
-        NODE_ENV: JSON.stringify('production'),
+        NODE_ENV: JSON.stringify('development'),
       },
     }),
   ],
