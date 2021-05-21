@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 export default function Room() {
@@ -11,6 +11,7 @@ export default function Room() {
 
   return (
     <div>
+      <h3>Room Code: {roomCode}</h3>
       <p>Votes: {votesToSkip}</p>
       <p>Guest Can Pause: {guestCanPause}</p>
       <p>Host: {isHost}</p>
