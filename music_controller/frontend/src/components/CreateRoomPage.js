@@ -38,7 +38,7 @@ export default function CreateRoomPage() {
       <Grid container spacing={1}>
         {/* 12 fills the intire grid, 12 is the max */}
         <Grid item xs={12} align='center'>
-          <Typography component='h4' variang='h4'>
+          <Typography variant='h4' component='h4'>
             Create A Room
           </Typography>
         </Grid>
