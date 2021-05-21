@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 export default function Room() {
-  const [votesToSkip, setVotesToSkip] = useState(2);
-  const [guestCanPause, setGuestCanPause] = useState(false);
-  const [isHost, setIsHost] = useState(false);
+  const [votesToSkip, setVotesToSkip] = useState();
+  const [guestCanPause, setGuestCanPause] = useState();
+  const [isHost, setIsHost] = useState();
 
   const { roomCode } = useParams();
 
@@ -13,6 +13,7 @@ export default function Room() {
       const res = await fetch(`/api/get-room?code=${roomCode}`);
 
       const { votes_to_skip, guest_can_pause, is_host } = await res.json();
+      console.log({ votes_to_skip, guest_can_pause, is_host });
 
       setVotesToSkip(votes_to_skip);
       setGuestCanPause(guest_can_pause);
@@ -21,14 +22,14 @@ export default function Room() {
     getRoomDetails();
   }, []);
 
+  if (!votesToSkip) return 'loading...';
+
   return (
-    guestCanPause && (
-      <div>
-        <h3>Room Code: {roomCode}</h3>
-        <p>Votes required to skip: {votesToSkip}</p>
-        <p>Guest Can Pause: {guestCanPause ? 'Yes' : 'No'}</p>
-        <p>Host: {isHost ? 'Yes' : 'No'}</p>
-      </div>
-    )
+    <div>
+      <h3>Room Code: {roomCode}</h3>
+      <p>Votes required to skip: {votesToSkip}</p>
+      <p>Guest Can Pause: {guestCanPause ? 'Yes' : 'No'}</p>
+      <p>Host: {isHost ? 'Yes' : 'No'}</p>
+    </div>
   );
 }

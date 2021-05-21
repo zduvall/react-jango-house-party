@@ -10,14 +10,18 @@ import {
   RadioGroup,
   FormControlLabel,
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 export default function CreateRoomPage() {
+  const history = useHistory();
+
   const [guestCanPause, setGuestCanPause] = useState('true');
   const [votesToSkip, setVotesToSkip] = useState(2);
 
   async function handleCreate() {
     const data = { guest_can_pause: guestCanPause, votes_to_skip: votesToSkip };
+
+    console.log(data);
 
     const res = await fetch('/api/create-room', {
       method: 'Post',
@@ -25,8 +29,8 @@ export default function CreateRoomPage() {
       body: JSON.stringify(data),
     });
 
-    const json = await res.json();
-    console.log(json);
+    const { code } = await res.json();
+    history.push(`/room/${code}`);
   }
 
   return (
@@ -45,21 +49,17 @@ export default function CreateRoomPage() {
               <RadioGroup
                 row
                 value={guestCanPause.toString()}
-                onChange={
-                  // (e) => setGuestCanPause(e.target.value)
-                  (e) =>
-                    setGuestCanPause(e.target.value === 'true' ? true : false)
+                onChange={(e) =>
+                  setGuestCanPause(e.target.value === 'true' ? 'true' : 'false')
                 }
               >
                 <FormControlLabel
-                  // value={true}
                   value='true'
                   control={<Radio color='primary' />}
                   label='Play/Pause'
                   labelPlacement='bottom'
                 />
                 <FormControlLabel
-                  // value={false}
                   value='false'
                   control={<Radio color='secondary' />}
                   label='No Control'
