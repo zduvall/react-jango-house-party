@@ -17,7 +17,7 @@ export default function HomePage() {
       <BrowserRouter>
         <Switch>
           <Route exact path='/'>
-            <p>This is the home page</p>
+            <div>This is the home page</div>
           </Route>
           <Route path='/join'>
             <JoinRoomPage />
