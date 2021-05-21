@@ -1,15 +1,9 @@
 import React from 'react';
 import JoinRoomPage from './JoinRoomPage';
 import CreateRoomPage from './CreateRoomPage';
+import Room from './Room';
 
-import {
-  browserRouter,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  BrowserRouter,
-} from 'react-router-dom';
+import { Switch, Route, Link, Redirect, BrowserRouter } from 'react-router-dom';
 
 export default function HomePage() {
   return (
@@ -24,6 +18,9 @@ export default function HomePage() {
           </Route>
           <Route path='/create'>
             <CreateRoomPage />
+          </Route>
+          <Route path='/room/:roomCode'>
+            <Room />
           </Route>
         </Switch>
       </BrowserRouter>
