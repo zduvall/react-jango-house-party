@@ -21,16 +21,16 @@ export default function CreateRoomPage() {
   async function handleCreate() {
     const data = { guest_can_pause: guestCanPause, votes_to_skip: votesToSkip };
 
-    console.log(data);
-
     const res = await fetch('/api/create-room', {
       method: 'Post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
 
-    const { code } = await res.json();
-    history.push(`/room/${code}`);
+    if (res.ok) {
+      const { code } = await res.json();
+      history.push(`/room/${code}`);
+    }
   }
 
   return (

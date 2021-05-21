@@ -1,13 +1,28 @@
 import React, { useState } from 'react';
 import { Button, Grid, Typography, TextField } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 export default function JoinRoomPage() {
+  const history = useHistory();
   const [roomCode, setRoomCode] = useState('');
   const [error, setError] = useState('');
 
   async function handleEnter() {
-    // const res = await fetch('/'});
+    try {
+      const data = { code: roomCode };
+      const res = await fetch('/api/join-room', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        history.push(`/room/${roomCode}`);
+      } else {
+        setError('Room not found.');
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
