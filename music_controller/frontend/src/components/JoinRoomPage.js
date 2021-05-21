@@ -6,6 +6,10 @@ export default function JoinRoomPage() {
   const [roomCode, setRoomCode] = useState('');
   const [error, setError] = useState('');
 
+  async function handleEnter() {
+    // const res = await fetch('/'});
+  }
+
   return (
     <Grid container spacing={1} aling='center'>
       <Grid item xs={12} align='center'>
@@ -20,7 +24,29 @@ export default function JoinRoomPage() {
             value={roomCode}
             helperText={error}
             variant='outlined'
+            onChange={(e) => setRoomCode(e.target.value)}
           ></TextField>
+        </Grid>
+        <Grid item xs={12} align='center'>
+          <Button
+            variant='contained'
+            color='primary'
+            style={{ marginTop: '.5rem' }}
+            onClick={handleEnter}
+          >
+            Enter Room
+          </Button>
+        </Grid>
+        <Grid item xs={12} align='center'>
+          <Button
+            variant='contained'
+            color='secondary'
+            to='/'
+            component={Link}
+            style={{ marginTop: '.5rem' }}
+          >
+            Back
+          </Button>
         </Grid>
       </Grid>
     </Grid>

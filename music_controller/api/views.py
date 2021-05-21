@@ -39,6 +39,23 @@ class GetRoom(APIView):
         )
 
 
+class JoinRoom(APIView):
+
+    lookup_url_kward = "code"
+
+    def post(self, req, format=None):
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+
+        code = req.data.get(self.lookup_url_kward)
+        if code:
+            room_res = Room.objects.filter(code=code)
+            if len(room_res):
+                room = room_res[0]
+                self.req.session["room_code"] = code
+                return Response({"message": "Room Joined!!"}, status=status.HTTP_200_OK)
+
+
 class CreateRoomView(APIView):
     serializer_class = CreateRoomSerializer
 
