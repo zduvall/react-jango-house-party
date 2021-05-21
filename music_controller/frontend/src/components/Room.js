@@ -6,15 +6,29 @@ export default function Room() {
   const [guestCanPause, setGuestCanPause] = useState(false);
   const [isHost, setIsHost] = useState(false);
 
-  let { roomCode } = useParams();
-  console.log(roomCode);
+  const { roomCode } = useParams();
+
+  useEffect(() => {
+    async function getRoomDetails() {
+      const res = await fetch(`/api/get-room?code=${roomCode}`);
+
+      const { votes_to_skip, guest_can_pause, is_host } = await res.json();
+
+      setVotesToSkip(votes_to_skip);
+      setGuestCanPause(guest_can_pause);
+      setIsHost(is_host);
+    }
+    getRoomDetails();
+  }, []);
 
   return (
-    <div>
-      <h3>Room Code: {roomCode}</h3>
-      <p>Votes: {votesToSkip}</p>
-      <p>Guest Can Pause: {guestCanPause}</p>
-      <p>Host: {isHost}</p>
-    </div>
+    guestCanPause && (
+      <div>
+        <h3>Room Code: {roomCode}</h3>
+        <p>Votes required to skip: {votesToSkip}</p>
+        <p>Guest Can Pause: {guestCanPause ? 'Yes' : 'No'}</p>
+        <p>Host: {isHost ? 'Yes' : 'No'}</p>
+      </div>
+    )
   );
 }
